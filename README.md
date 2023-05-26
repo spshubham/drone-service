@@ -4,9 +4,11 @@ To start the service :
     1. npm install 
     2. npm start
 
+# API DOC
 
-Use editor.swagger (https://editor.swagger.io/) for api documentation
-    API documentation link:
+Please Use editor.swagger (https://editor.swagger.io/) for api documentation:
+   1. API documentation link: https://github.com/spshubham/drone-service/blob/main/api_doc/api.yaml
+   2. Service is hosted, Use API documentation directly to execute all API's.
 
 
 # Docker file
