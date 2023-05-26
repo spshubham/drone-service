@@ -15,5 +15,5 @@ Please Use editor.swagger (https://editor.swagger.io/) for api documentation:
 # Docker file
 
 1. Build the docker file. (cmd : docker build -t drone_service .)
-2. start and run the container using above image. (cmd: docker run -itp 8181:8181 test)
+2. start and run the container using above image. (cmd: docker run -itp 8181:8181 drone_service)
 3. service available on: http://localhost:8181
