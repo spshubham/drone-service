@@ -1,0 +1,905 @@
+openapi: 3.0.3
+info:
+  title: Drone Service
+  description: |-
+    This is a sample drone service | You will get token after successful login |
+    Use token to execute the every API's
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8181
+
+paths:
+  /v1/user/signup:
+    post:
+      tags:
+        - User
+      summary: Create user
+      description: Register a user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+
+      responses:
+        "200":
+            description: successful operation
+            content:
+              application/json:
+                examples:
+                  user registered successfully:
+                    value:
+                      message: User Registered Successfully
+        "400":
+          description: Bad Request - see `message` field for additional information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"        
+
+  /v1/user/login:
+    get:
+      tags:
+        - User
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      parameters:
+        - name: email
+          in: query
+          description: The email for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/login'
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+ 
+  /v1/create/site:
+    post:
+      tags:
+        - Site
+      summary: Create Site
+      description: ''
+      operationId: createSite
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+      requestBody:
+        description: Created site object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Site'
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+                
+  /v1/update/site:
+    put:
+      tags:
+        - Site
+      summary: update site
+      description: ''
+      operationId: updateSite
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Created site object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Site'
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse" 
+                
+  /v1/delete/site:
+    delete:
+      tags:
+        - Site
+      summary: delete site
+      description: ''
+      operationId: deleteSite
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+          required: true
+          schema:
+            type: string
+  
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse" 
+  
+  /v1/get/site:
+    get:
+      tags:
+        - Site
+      summary: get site
+      description: ''
+      operationId: getSite
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+          required: true
+          schema:
+            type: string
+  
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse" 
+    
+  /v1/add/drone:
+    post:
+      tags:
+        - Drone
+      summary: Add drone
+      description: ''
+      operationId: addDrone
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Created site object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Drone'
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+  /v1/update/drone:
+    put:
+      tags:
+        - Drone
+      summary: Update drone
+      description: ''
+      operationId: updateDrone
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+          required: true
+          schema:
+            type: string
+        - name: drone_id
+          in: query
+          description: The drone_id 
+          required: true
+          schema:
+            type: string    
+      requestBody:
+        description: Created site object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Drone'
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+  /v1/delete/drone:
+    delete:
+      tags:
+        - Drone
+      summary: delete drone
+      description: ''
+      operationId: deleteDrone
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+          required: true
+          schema:
+            type: string
+        - name: drone_id
+          in: query
+          description: The drone_id 
+          required: true
+          schema:
+            type: string    
+
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+    
+  /v1/fetch/drone:
+    get:
+      tags:
+        - Drone
+      summary: fetch drone
+      description: ''
+      operationId: fetchdrone
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+  
+          schema:
+            type: string
+        - name: drone_id
+          in: query
+          description: The drone_id 
+          schema:
+            type: string    
+      
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+                   
+  /v1/update/drone/site:
+    put:
+      tags:
+        - Drone
+      summary: update drone site
+      description: ''
+      operationId: update srone site
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+          required: true
+          schema:
+            type: string
+        - name: drone_id
+          in: query
+          description: The drone_id 
+          required: true
+          schema:
+            type: string    
+      
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+  /v1/create/mission:
+    post:
+      tags:
+        - Mission
+      summary: create mission
+      description: ''
+      operationId: create Mission
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Created site object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Mission'
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+  /v1/update/mission:
+    put:
+      tags:
+        - Mission
+      summary: update mission
+      description: ''
+      operationId: update Mission
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+          required: true
+          schema:
+            type: string
+        - name: mission_id
+          in: query
+          description: The mission_id 
+          required: true
+          schema:
+            type: string    
+      requestBody:
+        description: Created site object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Mission'
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+  /v1/delete/mission:
+    delete:
+      tags:
+        - Mission
+      summary: delete mission
+      description: ''
+      operationId: delete Mission
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+          required: true
+          schema:
+            type: string
+        - name: mission_id
+          in: query
+          description: The mission_id 
+          required: true
+          schema:
+            type: string    
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+  /v1/fetch/mission:
+    get:
+      tags:
+        - Mission
+      summary: fetch mission
+      description: ''
+      operationId: fetch Mission
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: site_id
+          in: query
+          description: The site_id 
+          required: false
+          schema:
+            type: string
+        - name: mission_id
+          in: query
+          description: The mission_id 
+          required: false
+          schema:
+            type: string    
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+  /v1/add/category:
+    post:
+      tags:
+        - Category
+      summary: add category
+      description: ''
+      operationId: addcategory
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: drone_id
+          in: query
+          description: The drone_id 
+          required: false
+          schema:
+            type: string
+        - name: mission_id
+          in: query
+          description: The mission_id 
+          required: false
+          schema:
+            type: string    
+      requestBody:
+        description: Created site object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+  /v1/update/category:
+    put:
+      tags:
+        - Category
+      summary: update category
+      description: ''
+      operationId: updatecategory
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: category_id
+          in: query
+          description: The category_id 
+          required: true
+          schema:
+            type: string
+        - name: drone_id
+          in: query
+          description: The drone_id 
+          required: false
+          schema:
+            type: string
+        - name: mission_id
+          in: query
+          description: The mission_id 
+          required: false
+          schema:
+            type: string    
+      requestBody:
+        description: Created site object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+  /v1/delete/category:
+    delete:
+      tags:
+        - Category
+      summary: delete category
+      description: ''
+      operationId: deletecategory
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: category_id
+          in: query
+          description: The category_id 
+          required: true
+          schema:
+            type: string
+     
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+  /v1/mission/category:
+    get:
+      tags:
+        - Category
+      summary: mission category
+      description: ''
+      operationId: missioncategory
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: category
+          in: query
+          description: The category
+          required: true
+          schema:
+            type: string
+ 
+
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+  /v1/drone/category:
+    get:
+      tags:
+        - Category
+      summary: drone category
+      description: ''
+      operationId: dronecategory
+      parameters:
+        - $ref: '#/components/parameters/AccessToken'
+        - name: category
+          in: query
+          description: The category
+          required: true
+          schema:
+            type: string
+ 
+
+
+      responses:
+        '200':
+          description: successful operation
+
+    
+        '400':
+          description: Invalid parameter supplied 
+        '404':
+          description: Record not found 
+        "403":
+          description: Unauthorized 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestResponse"  
+  
+components:
+  parameters:
+   AccessToken:
+      name: "x-access-token"
+      in: header
+      description: Access Token.
+      required: true
+      schema:
+        type: string
+  schemas:
+
+    User:
+      type: object
+      properties:
+
+        name:
+          type: string
+          example: theUser
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '12345'
+    Site:
+      type: object
+      properties:
+
+        site_name:
+          type: string
+          example: theUser
+        position:
+          type: object
+          properties:
+            latitude:
+              type: string
+              example: "18.32"
+            longitude:
+              type: string
+              example: "78.32"
+    Drone:
+      type: object
+      properties:
+
+        name:
+          type: string
+          example: theUser
+        drone_type:
+          type: string
+          example: drone_type
+        make_name:
+          type: string
+          example: theUser  
+    Category:
+      type: object
+      properties:
+        name:
+            type: string
+            example: theUser
+        category:
+            type: string
+            example: war
+    Mission:
+      type: object
+      properties:
+
+        alt:
+          type: number
+          example: 4
+        speed:
+          type: number
+          example: 40  
+        name:
+          type: string
+          example: name
+        waypoints:
+          type: array
+          items:
+            type: object
+            properties:
+              alt: 
+                type: number
+                example: 44
+              lat: 
+                type: number
+                example: 33.7
+              lng:
+                type: number
+                example: 78
+         
+         
+        
+
+
+    login:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "login successful"
+        toke:
+          type: string
+          example: "as3sdsdjlkd9s"
+    BadRequestResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: Invalid request body.
+      
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+
+  requestBodies:
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
